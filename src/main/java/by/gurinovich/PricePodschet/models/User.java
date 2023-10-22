@@ -25,6 +25,9 @@ public class User {
     @Column(name = "chat_id")
     private Long chatId;
 
+    @Column(name = "username")
+    String username;
+
     @Column(name = "name")
     private String name;
 
@@ -33,6 +36,6 @@ public class User {
     private BotState botState;
 
     @OneToMany(mappedBy = "user")
-    List<CargoOrder> cargoOrders;
+    List<Order> orders;
 
 }

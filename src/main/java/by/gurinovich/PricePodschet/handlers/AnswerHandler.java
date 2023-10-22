@@ -13,11 +13,11 @@ public class AnswerHandler {
     private final MessageHandler messageHandler;
     private final CallbackHandler callbackHandler;
 
-    public SendMessage answer(String messageText, Long chatId, MessageType type, String username) {
+    public SendMessage answer(String messageText, Long chatId, MessageType type, String username, String name) {
         SendMessage result = new SendMessage();
         switch (type){
-            case MESSAGE -> result = messageHandler.answer(messageText, chatId, username);
-            case CALLBACK -> result = callbackHandler.answer(messageText, chatId, username);
+            case MESSAGE -> result = messageHandler.answer(messageText, chatId, username, name);
+            case CALLBACK -> result = callbackHandler.answer(messageText, chatId, username, name);
         }
         result.setChatId(chatId);
         return result;

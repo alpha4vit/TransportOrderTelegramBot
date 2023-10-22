@@ -1,0 +1,5 @@
+package by.gurinovich.PricePodschet.utils.passengers;
+
+public enum PassengerActions {
+    PASSENGERTYPE_ROUTE, PASSENGERTYPE_COMMENT, PASSENGERTYPE_SKIP_COMMENT, PASSENGERTYPE_CONFIRMATION, PASSENGERTYPE_DECLINE
+}

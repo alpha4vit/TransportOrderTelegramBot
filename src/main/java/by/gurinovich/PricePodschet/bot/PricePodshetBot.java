@@ -28,17 +28,22 @@ public class PricePodshetBot extends TelegramLongPollingBot {
         String messageText = null;
         Long chatId = null;
         String username= null;
+        String name = null;
         if (update.hasMessage() && update.getMessage().hasText()) {
             username = update.getMessage().getFrom().getUserName();
             chatId = update.getMessage().getChatId();
             messageText = update.getMessage().getText();
-            execute(answerHandler.answer(messageText, chatId, MessageType.MESSAGE, username));
+            name = update.getMessage().getFrom().getFirstName();
+            execute(answerHandler.answer(messageText, chatId, MessageType.MESSAGE, username, name));
         } else if (update.hasCallbackQuery()) {
             username = update.getCallbackQuery().getFrom().getUserName();
             chatId = update.getCallbackQuery().getMessage().getChatId();
             messageText = update.getCallbackQuery().getData();
-            execute(answerHandler.answer(messageText, chatId, MessageType.CALLBACK, username));
+            name = update.getCallbackQuery().getFrom().getFirstName();
+            execute(answerHandler.answer(messageText, chatId, MessageType.CALLBACK, username, name));
         }
+
+        // send message about new order
 
         if (chatId != null){
             BotState botState = userService.getByChatId(chatId).getBotState();

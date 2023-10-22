@@ -1,7 +1,6 @@
 package by.gurinovich.PricePodschet.services.orders;
 
-import by.gurinovich.PricePodschet.exceptions.InvalidOperationException;
-import by.gurinovich.PricePodschet.exceptions.ResourceNotFoundException;
+import by.gurinovich.PricePodschet.utils.OrderType;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,19 +14,19 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CityService {
 
-    private final CargoOrderService cargoOrderService;
+    private final OrderService orderService;
 
-    private final Set<String> cities = new HashSet<>(List.of("минск", "гродно", "белосток", "варшава", "вроцлав", "гданьск", "познань", "лодзь"));
+    private final Set<String> cities = new HashSet<>(List.of("минск", "гродно", "белосток", "варшава", "вроцлав", "гданьск", "познань", "лодзь", "несвиж"));
 
 
-    public boolean setRouteToOrder(Long chatId, String route){
+    public boolean setRouteToOrder(Long chatId, String route, OrderType type){
         String[] parsed = route.split("-");
         if (route.matches("[a-zA-Z]+-[a-zA-Z]+")
          || !cities.contains(parsed[0].toLowerCase())
             || !cities.contains(parsed[1].toLowerCase())){
             return false;
         }
-        cargoOrderService.setRoute(chatId, parsed[0], parsed[1]);
+        orderService.setRoute(chatId, parsed[0], parsed[1], type);
         return true;
     }
 }

@@ -1,6 +1,6 @@
 package by.gurinovich.PricePodschet.models;
 
-import by.gurinovich.PricePodschet.utils.states.OrderState;
+import by.gurinovich.PricePodschet.utils.OrderType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "cargo_orders")
+@Table(name = "orders")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CargoOrder {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +25,9 @@ public class CargoOrder {
 
     @Column(name = "value")
     private String value;
+
+    @Column(name = "comment")
+    private String comment;
 
     @Column(name = "departure")
     private String departure;
@@ -38,5 +41,12 @@ public class CargoOrder {
 
     @Column(name = "sended")
     private boolean sended;
+
+    @Column(name = "with_owner")
+    private boolean withOwner;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "type")
+    private OrderType type;
 
 }
