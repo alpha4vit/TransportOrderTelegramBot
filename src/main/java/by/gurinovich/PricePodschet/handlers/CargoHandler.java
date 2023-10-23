@@ -3,6 +3,7 @@ package by.gurinovich.PricePodschet.handlers;
 import by.gurinovich.PricePodschet.models.Order;
 import by.gurinovich.PricePodschet.models.buttons.CargoButtons;
 import by.gurinovich.PricePodschet.models.buttons.GeneralActionButtons;
+import by.gurinovich.PricePodschet.services.orders.CityService;
 import by.gurinovich.PricePodschet.services.orders.OrderService;
 import by.gurinovich.PricePodschet.services.users.UserService;
 import by.gurinovich.PricePodschet.utils.OrderType;
@@ -19,12 +20,14 @@ public class CargoHandler {
     private final HTMLParser htmlParser;
     private final UserService userService;
     private final OrderService orderService;
+    private final CityService cityService;
 
     public SendMessage answer(String message, Long chatId) {
 
         SendMessage result = new SendMessage();
         result.setText(htmlParser.readHTML("src/main/resources/static/messages/cityChoose.html"));
         BotState state = BotState.CARGO_ORDER_ROUTE;
+        result.setReplyMarkup(CargoButtons.createButtonForGetListOfCities());
 
         switch (CargoActions.valueOf(message)) {
             case CARGOTYPE_BOX_S -> orderService.setValue(chatId, "Коробка/чемодан S", OrderType.CARGO_ORDER);
@@ -35,6 +38,7 @@ public class CargoHandler {
             case CARGOTYPE_ANOTHER -> {
                 result.setText(htmlParser.readHTML("src/main/resources/static/cargo/anotherType.html"));
                 state = BotState.CARGO_ORDER_ANOTHER;
+                result.setReplyMarkup(null);
             }
             case CARGOTYPE_SKIP_COMMENT -> {
                 orderService.setComment(chatId, "", OrderType.CARGO_ORDER);
@@ -58,6 +62,10 @@ public class CargoHandler {
                 state = BotState.START;
                 result.setText(htmlParser.readHTML("src/main/resources/static/messages/orderDeclined.html"));
                 result.setReplyMarkup(GeneralActionButtons.createNewOrderButtons());
+            }
+            case CARGOTYPE_LIST_OF_CITIES -> {
+                result.setText(cityService.getStringOfAvailableCities());
+                result.setReplyMarkup(null);
             }
         }
         userService.setState(chatId, state);

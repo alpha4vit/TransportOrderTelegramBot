@@ -17,12 +17,15 @@ public class IndividualButtons {
 
     private static final InlineKeyboardButton SKIP_COMMENT = new InlineKeyboardButton("Пропустить!");
 
+    private static final InlineKeyboardButton GET_LIST_OF_CITIES = new InlineKeyboardButton("Получить список доступных городов!");
+
     static {
         CONFIRM.setCallbackData(IndividualActions.INDIVIDUALTYPE_CONFIRMATION.name());
         DECLINE.setCallbackData(IndividualActions.INDIVIDUALTYPE_DECLINE.name());
         SKIP_COMMENT.setCallbackData(IndividualActions.INDIVIDUALTYPE_SKIP_COMMENT.name());
         APPLY_OWNER.setCallbackData(IndividualActions.INDIVIDUALTYPE_APPLY_OWNER.name());
         DECLINE_OWNER.setCallbackData(IndividualActions.INDIVIDUALTYPE_DECLINE_OWNER.name());
+        GET_LIST_OF_CITIES.setCallbackData(IndividualActions.INDIVIDUALTYPE_LIST_OF_CITIES.name());
     }
 
     public static InlineKeyboardMarkup createSkipCommentKeyboard() {
@@ -43,6 +46,13 @@ public class IndividualButtons {
     public static InlineKeyboardMarkup createConfirmOwnerKeyboard() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<InlineKeyboardButton> buttons = List.of(APPLY_OWNER, DECLINE_OWNER);
+        inlineKeyboardMarkup.setKeyboard(List.of(buttons));
+        return inlineKeyboardMarkup;
+    }
+
+    public static InlineKeyboardMarkup createButtonForGetListOfCities(){
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<InlineKeyboardButton> buttons = List.of(GET_LIST_OF_CITIES);
         inlineKeyboardMarkup.setKeyboard(List.of(buttons));
         return inlineKeyboardMarkup;
     }

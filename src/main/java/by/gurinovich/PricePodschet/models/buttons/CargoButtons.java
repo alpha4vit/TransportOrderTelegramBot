@@ -21,6 +21,8 @@ public class CargoButtons {
 
     private static final InlineKeyboardButton SKIP_COMMENT = new InlineKeyboardButton("Пропустить!");
 
+    private static final InlineKeyboardButton GET_LIST_OF_CITIES = new InlineKeyboardButton("Получить список доступных городов!");
+
     static {
         BOX_S.setCallbackData(CargoActions.CARGOTYPE_BOX_S.name());
         BOX_M.setCallbackData(CargoActions.CARGOTYPE_BOX_M.name());
@@ -33,6 +35,9 @@ public class CargoButtons {
         DECLINE.setCallbackData(CargoActions.CARGOTYPE_DECLINE.name());
 
         SKIP_COMMENT.setCallbackData(CargoActions.CARGOTYPE_SKIP_COMMENT.name());
+
+        GET_LIST_OF_CITIES.setCallbackData(CargoActions.CARGOTYPE_LIST_OF_CITIES.name());
+
     }
 
     public static InlineKeyboardMarkup createChooseTypeKeyboard(){
@@ -61,5 +66,11 @@ public class CargoButtons {
         return inlineKeyboardMarkup;
     }
 
+    public static InlineKeyboardMarkup createButtonForGetListOfCities(){
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<InlineKeyboardButton> buttons = List.of(GET_LIST_OF_CITIES);
+        inlineKeyboardMarkup.setKeyboard(List.of(buttons));
+        return inlineKeyboardMarkup;
+    }
 
 }

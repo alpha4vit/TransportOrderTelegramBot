@@ -12,10 +12,15 @@ public class PassengerButtons {
 
     private static final InlineKeyboardButton SKIP_COMMENT = new InlineKeyboardButton("Пропустить!");
 
+    private static final InlineKeyboardButton GET_LIST_OF_CITIES = new InlineKeyboardButton("Получить список доступных городов!");
+
     static {
         CONFIRM.setCallbackData(PassengerActions.PASSENGERTYPE_CONFIRMATION.name());
         DECLINE.setCallbackData(PassengerActions.PASSENGERTYPE_DECLINE.name());
         SKIP_COMMENT.setCallbackData(PassengerActions.PASSENGERTYPE_SKIP_COMMENT.name());
+
+        GET_LIST_OF_CITIES.setCallbackData(PassengerActions.PASSENGERTYPE_LIST_OF_CITIES.name());
+
     }
 
     public static InlineKeyboardMarkup createSkipCommentKeyboard() {
@@ -32,5 +37,13 @@ public class PassengerButtons {
         inlineKeyboardMarkup.setKeyboard(List.of(buttons));
         return inlineKeyboardMarkup;
     }
+
+    public static InlineKeyboardMarkup createButtonForGetListOfCities(){
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<InlineKeyboardButton> buttons = List.of(GET_LIST_OF_CITIES);
+        inlineKeyboardMarkup.setKeyboard(List.of(buttons));
+        return inlineKeyboardMarkup;
+    }
+
 }
 

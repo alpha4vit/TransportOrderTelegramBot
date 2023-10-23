@@ -1,6 +1,7 @@
 package by.gurinovich.PricePodschet.models.buttons;
 
 import by.gurinovich.PricePodschet.utils.OrderType;
+import by.gurinovich.PricePodschet.utils.states.BotState;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
@@ -12,12 +13,16 @@ public class GeneralActionButtons {
     private static final InlineKeyboardButton PASSENGER_BUTTON = new InlineKeyboardButton("Стать пассажиром!");
     private static final InlineKeyboardButton CARGO_BUTTON = new InlineKeyboardButton("Передать посылку!");
     private static final InlineKeyboardButton INDIVIDUAL_BUTTON = new InlineKeyboardButton("Индивидуальный переезд!");
+
     private static final InlineKeyboardButton CREATE_NEW_ORDER = new InlineKeyboardButton("Сделать новый заказ!");
+
+
 
     static {
         CARGO_BUTTON.setCallbackData(OrderType.CARGO_ORDER.name());
         PASSENGER_BUTTON.setCallbackData(OrderType.PASSENGER_ORDER.name());
         INDIVIDUAL_BUTTON.setCallbackData(OrderType.INDIVIDUAL_ORDER.name());
+
         CREATE_NEW_ORDER.setCallbackData(OrderType.NEW_ORDER.name());
 
     }
@@ -37,5 +42,4 @@ public class GeneralActionButtons {
         inlineKeyboardMarkup.setKeyboard(List.of(buttons));
         return inlineKeyboardMarkup;
     }
-
 }

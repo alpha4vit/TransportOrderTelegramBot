@@ -3,6 +3,7 @@ package by.gurinovich.PricePodschet.handlers;
 import by.gurinovich.PricePodschet.models.Order;
 import by.gurinovich.PricePodschet.models.buttons.GeneralActionButtons;
 import by.gurinovich.PricePodschet.models.buttons.PassengerButtons;
+import by.gurinovich.PricePodschet.services.orders.CityService;
 import by.gurinovich.PricePodschet.services.orders.OrderService;
 import by.gurinovich.PricePodschet.services.users.UserService;
 import by.gurinovich.PricePodschet.utils.OrderType;
@@ -20,6 +21,7 @@ public class PassengerHandler {
     private final HTMLParser htmlParser;
     private final UserService userService;
     private final OrderService orderService;
+    private final CityService cityService;
 
     public SendMessage answer(String message, Long chatId){
         SendMessage result = new SendMessage();
@@ -27,18 +29,19 @@ public class PassengerHandler {
         switch (PassengerActions.valueOf(message)){
             case PASSENGERTYPE_ROUTE -> {
                 result.setText(htmlParser.readHTML("src/main/resources/static/messages/cityChoose.html"));
+                result.setReplyMarkup(PassengerButtons.createButtonForGetListOfCities());
                 userService.setState(chatId, BotState.PASSENGER_ORDER_ROUTE);
             }
-//            case PASSENGERTYPE_SKIP_COMMENT -> {
-//                userService.setState(chatId, BotState.CONFIRMATION);
-//                Order order = orderService.getUnconfirmedOrder(chatId, OrderType.PASSENGER_ORDER);
-//                result.setReplyMarkup(PassengerButtons.createOrderConfirmKeyboard());
-//                result.setText(String.format(htmlParser.readHTML("src/main/resources/static/passenger/orderConfirmation.html"),
-//                        order.getValue(),
-//                        order.getDeparture(),
-//                        order.getDestination(),
-//                        order.getComment()));
-//            }
+            case PASSENGERTYPE_SKIP_COMMENT -> {
+                userService.setState(chatId, BotState.CONFIRMATION);
+                Order order = orderService.getUnconfirmedOrder(chatId, OrderType.PASSENGER_ORDER);
+                result.setReplyMarkup(PassengerButtons.createOrderConfirmKeyboard());
+                result.setText(String.format(htmlParser.readHTML("src/main/resources/static/passenger/orderConfirmation.html"),
+                        order.getValue(),
+                        order.getDeparture(),
+                        order.getDestination(),
+                        order.getComment()));
+            }
             case PASSENGERTYPE_CONFIRMATION -> {
                 userService.setState(chatId, BotState.SEND_MESSAGE);
                 orderService.confirm(chatId, OrderType.PASSENGER_ORDER);
@@ -49,6 +52,9 @@ public class PassengerHandler {
                 orderService.deleteUncofirmedByChatIdAndType(chatId, OrderType.PASSENGER_ORDER);
                 result.setText(htmlParser.readHTML("src/main/resources/static/messages/orderDeclined.html"));
                 result.setReplyMarkup(GeneralActionButtons.createNewOrderButtons());
+            }
+            case PASSENGERTYPE_LIST_OF_CITIES -> {
+                result.setText(cityService.getStringOfAvailableCities());
             }
         }
 
