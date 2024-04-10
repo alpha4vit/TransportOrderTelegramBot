@@ -3,7 +3,7 @@
 ## Tags: 
 - #telegram_bot
 
-##Setup
+## Setup
 1. **Clone this repository**
 2. **Install docker**
 3. **Set up .env file with your enviroment variables**
